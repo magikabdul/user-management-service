@@ -1,1 +1,17 @@
+application:
+  title: User Management
+  version: v.0.0.1
+
+spring:
+  webflux:
+    base-path: "/api"
+  datasource:
+    host: localhost
+    port: 5432
+    database: users
+    username: SecretUser
+    password: SecretPass
+server:
+  port: 9999
+
 
