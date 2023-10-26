@@ -11,6 +11,13 @@ spring:
     database: users
     username: SecretUser
     password: SecretPass
+  flyway:
+    url: localhost
+    user: SecretUser
+    password: SecretPass
+  jpa:
+    hibernate:
+      ddl-auto: validate
 
 server:
   port: 9999
@@ -18,3 +25,4 @@ server:
 logging:
   level:
     root: info
+
