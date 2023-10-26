@@ -11,7 +11,10 @@ spring:
     database: users
     username: SecretUser
     password: SecretPass
+
 server:
   port: 9999
 
-
+logging:
+  level:
+    root: info
