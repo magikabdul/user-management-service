@@ -1,7 +1,7 @@
 package cloud.cholewa.user_management.api;
 
-import cloud.cholewa.user_management.api.model.UserRequest;
 import cloud.cholewa.user_management.api.model.UserReply;
+import cloud.cholewa.user_management.api.model.UserRequest;
 import cloud.cholewa.user_management.user.create.CreateUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
