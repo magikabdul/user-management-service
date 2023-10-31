@@ -21,6 +21,10 @@ spring:
 
 server:
   port: 9999
+  error:
+    include-exception: true
+    include-binding-errors: always
+    include-message: always
 
 logging:
   level:
