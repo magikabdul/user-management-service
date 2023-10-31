@@ -3,6 +3,7 @@ package cloud.cholewa.user_management.config;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryOptions;
+import io.r2dbc.spi.Option;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,13 +37,13 @@ class DbConfig {
     @Bean
     ConnectionFactory connectionFactory() {
         return ConnectionFactories.get(ConnectionFactoryOptions.builder()
-                .option(ConnectionFactoryOptions.DRIVER, "pool")
-                .option(ConnectionFactoryOptions.PROTOCOL, "postgres")
+                .option(ConnectionFactoryOptions.DRIVER, "postgresql")
                 .option(ConnectionFactoryOptions.HOST, host)
                 .option(ConnectionFactoryOptions.PORT, port)
                 .option(ConnectionFactoryOptions.DATABASE, database)
                 .option(ConnectionFactoryOptions.USER, username)
                 .option(ConnectionFactoryOptions.PASSWORD, password)
+                .option(Option.valueOf("sslMode"), "REQUIRE")
                 .build());
     }
 
