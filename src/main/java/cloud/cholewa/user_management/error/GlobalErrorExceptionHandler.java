@@ -40,6 +40,7 @@ public class GlobalErrorExceptionHandler extends AbstractErrorWebExceptionHandle
                 Map.entry(AuthenticationException.class, new AuthenticationExceptionProcessor()),
                 Map.entry(NotImplementedException.class, new NotImplementedExceptionProcessor()),
                 Map.entry(ServerWebInputException.class, new ServerWebInputExceptionProcessor()),
+                Map.entry(UserException.class, new UserExceptionProcessor()),
                 Map.entry(WebExchangeBindException.class, new WebExchangeBindExceptionProcessor())
         );
     }
