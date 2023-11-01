@@ -9,6 +9,7 @@ import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.codec.ServerCodecConfigurer;
+import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.*;
 import org.springframework.web.server.ServerWebInputException;
@@ -38,7 +39,8 @@ public class GlobalErrorExceptionHandler extends AbstractErrorWebExceptionHandle
         processorMap = Map.ofEntries(
                 Map.entry(AuthenticationException.class, new AuthenticationExceptionProcessor()),
                 Map.entry(NotImplementedException.class, new NotImplementedExceptionProcessor()),
-                Map.entry(ServerWebInputException.class, new ServerWebInputExceptionProcessor())
+                Map.entry(ServerWebInputException.class, new ServerWebInputExceptionProcessor()),
+                Map.entry(WebExchangeBindException.class, new WebExchangeBindExceptionProcessor())
         );
     }
 
