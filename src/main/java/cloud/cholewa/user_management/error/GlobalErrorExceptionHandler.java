@@ -1,10 +1,7 @@
 package cloud.cholewa.user_management.error;
 
 import cloud.cholewa.user_management.error.model.Messages;
-import cloud.cholewa.user_management.error.processor.AuthenticationExceptionProcessor;
-import cloud.cholewa.user_management.error.processor.DefaultExceptionProcessor;
-import cloud.cholewa.user_management.error.processor.ExceptionProcessor;
-import cloud.cholewa.user_management.error.processor.NotImplementedExceptionProcessor;
+import cloud.cholewa.user_management.error.processor.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
@@ -14,6 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.*;
+import org.springframework.web.server.ServerWebInputException;
 import reactor.core.publisher.Mono;
 
 import javax.security.sasl.AuthenticationException;
@@ -39,7 +37,8 @@ public class GlobalErrorExceptionHandler extends AbstractErrorWebExceptionHandle
 
         processorMap = Map.ofEntries(
                 Map.entry(AuthenticationException.class, new AuthenticationExceptionProcessor()),
-                Map.entry(NotImplementedException.class, new NotImplementedExceptionProcessor())
+                Map.entry(NotImplementedException.class, new NotImplementedExceptionProcessor()),
+                Map.entry(ServerWebInputException.class, new ServerWebInputExceptionProcessor())
         );
     }
 
