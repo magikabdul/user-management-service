@@ -2,12 +2,14 @@ package cloud.cholewa.user_management.error;
 
 import cloud.cholewa.user_management.error.model.Messages;
 import cloud.cholewa.user_management.error.processor.*;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -38,6 +40,8 @@ public class GlobalErrorExceptionHandler extends AbstractErrorWebExceptionHandle
 
         processorMap = Map.ofEntries(
                 Map.entry(AuthenticationException.class, new AuthenticationExceptionProcessor()),
+                Map.entry(ConstraintViolationException.class, new ConstraintViolationExceptionProcessor()),
+                Map.entry(DuplicateKeyException.class, new DuplicateKeyExceptionProcessor()),
                 Map.entry(NotImplementedException.class, new NotImplementedExceptionProcessor()),
                 Map.entry(ServerWebInputException.class, new ServerWebInputExceptionProcessor()),
                 Map.entry(UserException.class, new UserExceptionProcessor()),
