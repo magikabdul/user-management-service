@@ -24,6 +24,7 @@
         <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
         <tidy-maven-plugin.version>1.2.0</tidy-maven-plugin.version>
         <versions-maven-plugin.version>2.16.1</versions-maven-plugin.version>
+        <nimbus-jose-jwt.version>9.37.1</nimbus-jose-jwt.version>
     </properties>
 
     <dependencies>
@@ -57,6 +58,12 @@
             <artifactId>r2dbc-postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>${nimbus-jose-jwt.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
