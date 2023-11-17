@@ -2,7 +2,7 @@ package cloud.cholewa.user_management.api;
 
 import cloud.cholewa.user_management.api.model.UserReply;
 import cloud.cholewa.user_management.api.model.UserRequest;
-import cloud.cholewa.user_management.error.NotImplementedException;
+import cloud.cholewa.user_management.user.authenticate.AuthenticateUserService;
 import cloud.cholewa.user_management.user.create.CreateUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import reactor.core.publisher.Mono;
 class UserController {
 
     private final CreateUserService createUserService;
+    private final AuthenticateUserService authenticateUserService;
 
     @PostMapping("/register")
     Mono<ResponseEntity<UserReply>> register(@Valid @RequestBody final UserRequest userRequest) {
@@ -27,10 +28,9 @@ class UserController {
     }
 
     @PostMapping("/login")
-    Mono<ResponseEntity<Void>> login() {
+    Mono<ResponseEntity<String>> login(@Valid @RequestBody final UserRequest userRequest) {
         log.info("Invoked endpoint 'login'");
-        return Mono.error(new NotImplementedException());
-        //return Mono.just(ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build());
+        return authenticateUserService.login(userRequest);
     }
 
     @PatchMapping("/update")

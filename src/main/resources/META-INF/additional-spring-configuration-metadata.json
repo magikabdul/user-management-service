@@ -9,5 +9,16 @@
       "name": "application.title",
       "type": "java.lang.String",
       "description": "Description for application.title."
+    },
+    {
+      "name": "jwt.expiration",
+      "type": "java.lang.String",
+      "description": "Description for jwt.expiration."
+    },
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for jwt.secret."
     }
-  ] }
+  ]
+}

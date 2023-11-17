@@ -30,3 +30,6 @@ logging:
   level:
     root: info
 
+jwt:
+  expiration: 10
+  secret: DummySecret
