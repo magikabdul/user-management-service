@@ -4,6 +4,7 @@ import cloud.cholewa.user_management.api.model.UserReply;
 import cloud.cholewa.user_management.api.model.UserRequest;
 import cloud.cholewa.user_management.user.authenticate.AuthenticateUserService;
 import cloud.cholewa.user_management.user.create.CreateUserService;
+import cloud.cholewa.user_management.user.delete.DeleteUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ class UserController {
 
     private final CreateUserService createUserService;
     private final AuthenticateUserService authenticateUserService;
+    private final DeleteUserService deleteUserService;
 
     @PostMapping("/register")
     Mono<ResponseEntity<UserReply>> register(@Valid @RequestBody final UserRequest userRequest) {
@@ -39,9 +41,9 @@ class UserController {
         return Mono.just(ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build());
     }
 
-    @DeleteMapping("/delete")
-    Mono<ResponseEntity<Void>> delete() {
+    @DeleteMapping("/delete/{login}")
+    Mono<ResponseEntity<Void>> delete(@PathVariable String login) {
         log.info("Invoked endpoint 'delete'");
-        return Mono.just(ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build());
+        return deleteUserService.deleteUser(login);
     }
 }
