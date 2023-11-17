@@ -3,6 +3,7 @@ package cloud.cholewa.user_management.api;
 import cloud.cholewa.user_management.api.model.UserReply;
 import cloud.cholewa.user_management.user.authenticate.AuthenticateUserService;
 import cloud.cholewa.user_management.user.create.CreateUserService;
+import cloud.cholewa.user_management.user.delete.DeleteUserService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ class UserControllerTest {
 
     @MockBean
     AuthenticateUserService authenticateUserService;
+
+    @MockBean
+    DeleteUserService deleteUserService;
 
     @Test
     @Disabled("to fix after finishing implementation")

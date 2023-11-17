@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class DeleteUserServiceImpl implements DeleteUserService {
+class DeleteUserServiceImpl implements DeleteUserService {
     @Override
     public Mono<ResponseEntity<Void>> deleteUser(String login) {
         return Mono.just(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
