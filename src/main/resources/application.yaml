@@ -32,3 +32,4 @@ logging:
 
 jwt:
   expiration: 10
+  secret: DummySecret

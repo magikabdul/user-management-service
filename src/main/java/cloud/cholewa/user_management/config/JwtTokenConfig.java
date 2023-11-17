@@ -8,4 +8,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class JwtTokenConfig {
 
     String expiration;
+    String secret;
 }
