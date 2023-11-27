@@ -47,7 +47,7 @@ class UserControllerTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("to fix after finishing implementation")
     void should_return_not_implemented_when_login() {
         webTestClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/users/login")
@@ -58,7 +58,7 @@ class UserControllerTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("to fix after finishing implementation")
     void should_return_not_implemented_when_update() {
         webTestClient.patch()
                 .uri(uriBuilder -> uriBuilder.path("/users/update")
@@ -69,7 +69,7 @@ class UserControllerTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("to fix after finishing implementation")
     void should_return_not_implemented_when_delete() {
         webTestClient.delete()
                 .uri(uriBuilder -> uriBuilder.path("/users/delete")
