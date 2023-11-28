@@ -3,6 +3,7 @@ package cloud.cholewa.user_management.api;
 import cloud.cholewa.user_management.api.model.UserReply;
 import cloud.cholewa.user_management.user.authenticate.AuthenticateUserService;
 import cloud.cholewa.user_management.user.create.CreateUserService;
+import cloud.cholewa.user_management.user.delete.DeleteUserService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ class UserControllerTest {
     @MockBean
     AuthenticateUserService authenticateUserService;
 
+    @MockBean
+    DeleteUserService deleteUserService;
+
     @Test
     @Disabled("to fix after finishing implementation")
     void should_return_created_when_register() {
@@ -43,7 +47,7 @@ class UserControllerTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("to fix after finishing implementation")
     void should_return_not_implemented_when_login() {
         webTestClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/users/login")
@@ -54,7 +58,7 @@ class UserControllerTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("to fix after finishing implementation")
     void should_return_not_implemented_when_update() {
         webTestClient.patch()
                 .uri(uriBuilder -> uriBuilder.path("/users/update")
@@ -65,7 +69,7 @@ class UserControllerTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("to fix after finishing implementation")
     void should_return_not_implemented_when_delete() {
         webTestClient.delete()
                 .uri(uriBuilder -> uriBuilder.path("/users/delete")
