@@ -2,13 +2,14 @@ package cloud.cholewa.user_management.api;
 
 import cloud.cholewa.user_management.api.model.UserReply;
 import cloud.cholewa.user_management.api.model.UserRequest;
+import cloud.cholewa.user_management.api.model.UserRequestUpdate;
 import cloud.cholewa.user_management.user.authenticate.AuthenticateUserService;
 import cloud.cholewa.user_management.user.create.CreateUserService;
 import cloud.cholewa.user_management.user.delete.DeleteUserService;
+import cloud.cholewa.user_management.user.update.UpdateUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -22,6 +23,7 @@ class UserController {
     private final CreateUserService createUserService;
     private final AuthenticateUserService authenticateUserService;
     private final DeleteUserService deleteUserService;
+    private final UpdateUserService updateUserService;
 
     @PostMapping("/register")
     Mono<ResponseEntity<UserReply>> register(@Valid @RequestBody final UserRequest userRequest) {
@@ -35,10 +37,10 @@ class UserController {
         return authenticateUserService.login(userRequest);
     }
 
-    @PatchMapping("/update")
-    Mono<ResponseEntity<Void>> update() {
+    @PatchMapping("/update/{login}")
+    Mono<ResponseEntity<UserReply>> update(@PathVariable String login, @RequestBody UserRequestUpdate userRequestUpdate) {
         log.info("Invoked endpoint 'update'");
-        return Mono.just(ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build());
+        return updateUserService.updateUser(login, userRequestUpdate);
     }
 
     @DeleteMapping("/delete/{login}")
