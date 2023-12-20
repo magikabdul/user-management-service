@@ -2,6 +2,8 @@ package cloud.cholewa.user_management.api;
 
 import cloud.cholewa.user_management.api.model.UserReply;
 import cloud.cholewa.user_management.api.model.UserRequest;
+import cloud.cholewa.user_management.api.model.UserRequestUpdate;
+import cloud.cholewa.user_management.filter.AuthorizationFilter;
 import cloud.cholewa.user_management.user.authenticate.AuthenticateUserService;
 import cloud.cholewa.user_management.user.create.CreateUserService;
 import cloud.cholewa.user_management.user.delete.DeleteUserService;
@@ -14,6 +16,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -22,12 +26,14 @@ import reactor.core.publisher.Mono;
 
 import java.util.stream.Stream;
 
-@WebFluxTest(UserController.class)
+@WebFluxTest(
+        controllers = UserController.class,
+        excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = AuthorizationFilter.class)
+)
 class UserControllerTest {
 
     @Autowired
     WebTestClient webTestClient;
-
 
     @MockBean
     CreateUserService createUserService;
@@ -122,5 +128,40 @@ class UserControllerTest {
                         new UserRequest("log", null)
                 )
         );
+    }
+
+    @Test
+    void should_return_ok_after_user_updated() {
+        Mockito.when(updateUserService.updateUser(Mockito.any(), Mockito.any()))
+                .thenReturn(Mono.just(new ResponseEntity<>(HttpStatus.OK)));
+
+
+        webTestClient.patch()
+                .uri(uriBuilder -> uriBuilder.path("/users/update/userLogin").build())
+                .body(BodyInserters.fromValue(
+                        new UserRequestUpdate(null, true)
+                ))
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void should_return_bad_request_when_user_update_body_is_missing() {
+
+        webTestClient.patch()
+                .uri(uriBuilder -> uriBuilder.path("/users/update/userLogin").build())
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void should_return_noContent_after_deleting_user() {
+        Mockito.when(deleteUserService.deleteUser(Mockito.any()))
+                .thenReturn(Mono.just(new ResponseEntity<>(HttpStatus.NO_CONTENT)));
+
+        webTestClient.delete()
+                .uri(uriBuilder -> uriBuilder.path("/users/delete/userLogin").build())
+                .exchange()
+                .expectStatus().isNoContent();
     }
 }
