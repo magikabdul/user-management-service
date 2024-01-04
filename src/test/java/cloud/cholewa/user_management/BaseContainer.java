@@ -1,41 +1,52 @@
 package cloud.cholewa.user_management;
 
 import org.flywaydb.core.Flyway;
-import org.flywaydb.core.api.Location;
-import org.flywaydb.core.api.configuration.ClassicConfiguration;
 import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers
 @ActiveProfiles("test")
 public class BaseContainer {
 
-    private static final GenericContainer<?> postgres = new GenericContainer<>(
-            DockerImageName.parse("postgres:13"))
-            .withEnv("POSTGRES_PASSWORD", "password")
-            .withEnv("POSTGRES_DB", "test")
-            //.withEnv("spring.datasource.url=", "jdbc:postgresql://localhost:5432/crm")
-            .withExposedPorts(5432);
+    private static final String IMAGE_NAME = "postgres:13";
+    private static final String DATABASE_NAME = "test";
+    private static final String USERNAME = "login";
+    private static final String PASSWORD = "password";
+    private static final int DATABASE_PORT = 5432;
+
+    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(IMAGE_NAME)
+            .withDatabaseName(DATABASE_NAME)
+            .withUsername(USERNAME)
+            .withPassword(PASSWORD)
+            .withExposedPorts(DATABASE_PORT);
 
     public static void startPostgres() {
         postgres.start();
 
-        final ClassicConfiguration flywayConfiguration = new ClassicConfiguration();
-        flywayConfiguration.setDataSource("jdbc:tc:postgresql:13:///test", "sa", "password");
-        flywayConfiguration.setLocations(new Location("db/migration"));
-        final Flyway flyway = new Flyway(flywayConfiguration);
+        System.setProperty(
+                "spring.datasource.url",
+                "jdbc:postgresql://localhost:" + postgres.getFirstMappedPort() + "/" + postgres.getDatabaseName()
+        );
+
+//        System.setProperty("spring.r2dbc.url", "r2dbc:tc:postgresql:///testdb?TC_IMAGE_TAG=13");
+
+        System.setProperty("spring.datasource.host", postgres.getHost());
+        System.setProperty("spring.datasource.port", String.valueOf(postgres.getFirstMappedPort()));
+        System.setProperty("spring.datasource.database", postgres.getDatabaseName());
+        System.setProperty("spring.datasource.username", postgres.getUsername());
+        System.setProperty("spring.datasource.password", postgres.getPassword());
+        System.setProperty("spring.datasource.sslMode", "DISABLE");
+
+        final Flyway flyway = Flyway.configure()
+                .dataSource(postgres.getJdbcUrl(), postgres.getUsername(), postgres.getPassword())
+                .locations("classpath:/db/migration")
+                .load();
+
         flyway.migrate();
     }
-
-
 
     public static void stopPostgres() {
         postgres.stop();
     }
 }
-
-
-//r2dbc:tc:postgresql:///databasename?TC_IMAGE_TAG=9.6.8
