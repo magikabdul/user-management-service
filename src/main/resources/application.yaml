@@ -11,6 +11,7 @@ spring:
     database: users
     username: SecretUser
     password: SecretPass
+    sslMode: REQUIRE
   flyway:
     url: localhost
     user: SecretUser
@@ -33,3 +34,12 @@ logging:
 jwt:
   expiration: 10
   secret: DummySecret
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  flyway:
+    enabled: false
