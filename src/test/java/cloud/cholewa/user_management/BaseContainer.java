@@ -24,13 +24,6 @@ public class BaseContainer {
     public static void startPostgres() {
         postgres.start();
 
-        System.setProperty(
-                "spring.datasource.url",
-                "jdbc:postgresql://localhost:" + postgres.getFirstMappedPort() + "/" + postgres.getDatabaseName()
-        );
-
-//        System.setProperty("spring.r2dbc.url", "r2dbc:tc:postgresql:///testdb?TC_IMAGE_TAG=13");
-
         System.setProperty("spring.datasource.host", postgres.getHost());
         System.setProperty("spring.datasource.port", String.valueOf(postgres.getFirstMappedPort()));
         System.setProperty("spring.datasource.database", postgres.getDatabaseName());
