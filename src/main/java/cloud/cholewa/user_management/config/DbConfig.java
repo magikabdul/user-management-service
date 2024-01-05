@@ -34,6 +34,9 @@ class DbConfig {
     @Value("${spring.datasource.port}")
     private Integer port;
 
+    @Value("${spring.datasource.sslMode}")
+    private String sslMode;
+
     @Bean
     ConnectionFactory connectionFactory() {
         return ConnectionFactories.get(ConnectionFactoryOptions.builder()
@@ -43,7 +46,7 @@ class DbConfig {
                 .option(ConnectionFactoryOptions.DATABASE, database)
                 .option(ConnectionFactoryOptions.USER, username)
                 .option(ConnectionFactoryOptions.PASSWORD, password)
-                .option(Option.valueOf("sslMode"), "REQUIRE")
+                .option(Option.valueOf("sslMode"), sslMode)
                 .build());
     }
 

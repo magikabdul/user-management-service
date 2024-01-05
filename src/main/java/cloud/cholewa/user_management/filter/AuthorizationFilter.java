@@ -23,7 +23,7 @@ import java.util.Map;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-class AuthorizationFilter implements WebFilter {
+public class AuthorizationFilter implements WebFilter {
 
     private final JwtTokenConfig config;
 
